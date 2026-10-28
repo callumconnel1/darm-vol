@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "Please cite the software and its underlying research preprint."
+title: "darm-vol: Decaying AutoRegressive Memory for Conditional Volatility"
+type: software
+authors:
+  - family-names: Connell
+    given-names: Callum
+version: 0.1.0

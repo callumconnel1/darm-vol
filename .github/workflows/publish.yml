@@ -1,0 +1,62 @@
+name: Controlled PyPI publishing
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      destination:
+        description: 'Manual preview channel only'
+        required: true
+        type: choice
+        options: [testpypi]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          test -f LICENSE || (echo 'Licence required before public release' && exit 1)
+          python -m pip install -e '.[dev]'
+          python -m pytest -q
+          python -m ruff check src tests examples
+          python -m build
+          python -m twine check dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-packages
+          path: dist/
+  testpypi:
+    if: github.event_name == 'workflow_dispatch' && inputs.destination == 'testpypi'
+    needs: build
+    runs-on: ubuntu-latest
+    environment: testpypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: python-packages
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+  pypi:
+    if: github.event_name == 'release' && github.event.action == 'published' && startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: python-packages
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
