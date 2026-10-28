@@ -5,4 +5,4 @@ type: software
 authors:
   - family-names: Connell
     given-names: Callum
-version: 0.1.0
+version: 0.1.1
