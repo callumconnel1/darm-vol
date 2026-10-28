@@ -2,7 +2,12 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+from typing import TYPE_CHECKING
+
 import numpy as np
+
+if TYPE_CHECKING:
+    from .results import DARMResults
 
 from .estimation import maximum_likelihood
 from .kernels import canonical_kernel, kernel_weights

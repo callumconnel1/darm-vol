@@ -3,12 +3,12 @@ from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
+
 import numpy as np
 from scipy.optimize import minimize
 
 from .kernels import PARAMETERS
 from .likelihood import log_likelihood
-
 
 # Numerical boxes used for v0.1 fitting, not theoretical supports.
 SHAPE_BOUNDS = {"beta": (1e-4, .9999), "alpha": (1e-4, 10.),
@@ -75,11 +75,11 @@ def maximum_likelihood(eps: np.ndarray, *, kernel: str, lags: int,
         base.update(start_params)
     first = encode(base)
     if any(not np.isfinite(v) or v < lo or v > hi
-           for v, (lo, hi) in zip(first, bounds)):
+           for v, (lo, hi) in zip(first, bounds, strict=True)):
         raise ValueError("start_params lie outside the supported numerical bounds")
     rng = np.random.default_rng(random_state)
     starts = [first]
-    for i in range(1, n_starts):
+    for _ in range(1, n_starts):
         theta = first.copy()
         theta[0] = np.clip(theta[0] + rng.normal(0, .75), *bounds[0])
         theta[1] = rng.uniform(.3, .94)

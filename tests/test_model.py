@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
-from darm_vol import DARM
 
+from darm_vol import DARM
 
 PARAMS = {"omega": .00002, "rho": .7, "alpha": 1.8, "delta": 3.}
 

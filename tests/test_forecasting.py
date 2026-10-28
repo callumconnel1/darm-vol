@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from darm_vol import DARM
 from darm_vol.forecasting import variance_forecast
 
@@ -33,7 +34,10 @@ def test_multistep_independent_reference():
 
 def test_forecast_only_uses_past():
     p = {"omega": .001, "rho": .7, "alpha": 2., "delta": 2.}
-    f = lambda x: variance_forecast(np.asarray(x), p, "power", 2, False, 2).daily_variance
+    def f(x):
+        return variance_forecast(
+            np.asarray(x), p, "power", 2, False, 2
+        ).daily_variance
     np.testing.assert_array_equal(f([.1, .2, .3]), f([.8, .2, .3]))
     with pytest.raises(ValueError):
         variance_forecast(np.array([.1, .2]), p, "power", 2, False, 0)

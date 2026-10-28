@@ -1,8 +1,9 @@
 import numpy as np
 import pytest
 from scipy import stats
+
 from darm_vol import DARM
-from darm_vol.distributions import standardized_t_logpdf, gaussian_logpdf
+from darm_vol.distributions import gaussian_logpdf, standardized_t_logpdf
 
 
 def test_standardized_t_against_scipy():

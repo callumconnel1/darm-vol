@@ -1,8 +1,9 @@
 """Multi-horizon finite-state conditional mean forecasts of h_t."""
 from __future__ import annotations
 
-from dataclasses import dataclass
 from collections.abc import Mapping
+from dataclasses import dataclass
+
 import numpy as np
 
 from .kernels import kernel_weights

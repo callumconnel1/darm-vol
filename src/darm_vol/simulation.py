@@ -1,8 +1,9 @@
 """Finite-K simulations with a documented deterministic presample convention."""
 from __future__ import annotations
 
-from dataclasses import dataclass
 from collections.abc import Mapping
+from dataclasses import dataclass
+
 import numpy as np
 
 from .distributions import draw_shocks

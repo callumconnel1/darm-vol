@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+
 import numpy as np
 
 from .distributions import gaussian_logpdf, standardized_t_logpdf

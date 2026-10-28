@@ -2,9 +2,9 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+
 import numpy as np
 from scipy.special import logsumexp
-
 
 PARAMETERS = {"exponential": ("beta",), "power": ("alpha", "delta"),
               "hyperbolic": ("s", "p")}

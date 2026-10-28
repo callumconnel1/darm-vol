@@ -1,6 +1,7 @@
 """Verify future transformed shocks are replaced by conditional expectations."""
 
 import numpy as np
+
 from darm_vol.forecasting import variance_forecast
 from darm_vol.kernels import kernel_weights
 
